@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Library - Modern Management System</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.05) 100%);
+            border-radius: 20px;
+            padding: 5rem 2rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .btn-primary:hover {
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+        
+        .form-control {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(76, 201, 240, 0.25);
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            height: 100%;
+        }
+        
+        .sidebar .nav-link {
+            color: var(--dark-color);
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.05) 100%);
+            color: var(--primary-color);
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 0.7rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .book-cover {
+            height: 200px;
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        
+        .book-info {
+            padding: 1.5rem;
+        }
+        
+        .status-available {
+            color: #2ecc71;
+        }
+        
+        .status-borrowed {
+            color: #e74c3c;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Glass morphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 1rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* Floating circles decoration */
+        .circle-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.05) 100%);
+            z-index: -1;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        /* Testimonial section */
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(67, 97, 238, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">NexusLibrary</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary" href="#login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="circle-decoration circle-1"></div>
+        <div class="circle-decoration circle-2"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Next-Gen Library Management for 2025</h1>
+                    <p class="lead mb-4">Transform your library with our AI-powered management system. Access your collection from anywhere with our cloud-based platform.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#login" class="btn btn-primary px-4">Get Started</a>
+                        <a href="#features" class="btn btn-outline-primary px-4">Learn More</a>
+                    </div>
+                    <div class="d-flex align-items-center mt-4">
+                        <div class="d-flex">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" class="rounded-circle border border-2 border-white" width="40">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User" class="rounded-circle border border-2 border-white ms-n2" width="40">
+                            <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="User" class="rounded-circle border border-2 border-white ms-n2" width="40">
+                        </div>
+                        <div class="ms-3">
+                            <p class="small mb-0"><span class="fw-bold">1,200+</span> libraries trust our system</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-dark ms-1">4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Modern library" class="img-fluid rounded-4 shadow floating" style="max-height: 400px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Advanced Features</h2>
+                <p class="text-muted">Everything you need to manage your library efficiently</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h4>Digital Catalog</h4>
+                        <p class="text-muted">Manage your entire collection with our intuitive digital catalog system with AI-powered search.</p>
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Books" class="img-fluid rounded mt-3">
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h4>Member Management</h4>
+                        <p class="text-muted">Track members, issue digital cards, and manage complete borrowing history with facial recognition.</p>
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Member" class="img-fluid rounded mt-3">
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Advanced Search</h4>
+                        <p class="text-muted">Natural language search with filters for title, author, genre, popularity and more.</p>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Search" class="img-fluid rounded mt-3">
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Smart Analytics</h4>
+                        <p class="text-muted">AI-powered insights into borrowing patterns and collection performance with predictions.</p>
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Analytics" class="img-fluid rounded mt-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">What Our Clients Say</h2>
+                <p class="text-muted">Trusted by libraries worldwide</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="testimonial-avatar me-3">
+                            <div>
+                                <h5 class="mb-0">Sarah Johnson</h5>
+                                <p class="text-muted small mb-0">Director, City Public Library</p>
+                            </div>
+                        </div>
+                        <p>"NexusLibrary transformed our operations completely. Our circulation increased by 40% in the first 6 months thanks to their intuitive system."</p>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="testimonial-avatar me-3">
+                            <div>
+                                <h5 class="mb-0">Michael Chen</h5>
+                                <p class="text-muted small mb-0">Librarian, University of Tech</p>
+                            </div>
+                        </div>
+                        <p>"The analytics dashboard alone is worth the investment. We've optimized our collection based on data we never had access to before."</p>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Williams" class="testimonial-avatar me-3">
+                            <div>
+                                <h5 class="mb-0">Emma Williams</h5>
+                                <p class="text-muted small mb-0">Head Librarian, School District</p>
+                            </div>
+                        </div>
+                        <p>"Our students love the mobile app integration. Book checkouts have never been easier. The support team is incredibly responsive too."</p>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Login" class="img-fluid rounded-4 shadow">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="login-card">
+                                <h2 class="text-center mb-4">Access Your Library</h2>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" placeholder="••••••••">
+                                    </div>
+                                    <div class="d-grid mb-3">
+                                        <button type="submit" class="btn btn-primary">Sign In</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="#" class="text-decoration-none">Forgot password?</a>
+                                        <p class="mt-3 mb-0">Don't have an account? <a href="#" class="text-primary">Contact us</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Catalog Preview -->
+    <section id="catalog" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Explore Our Collection</h2>
+                <p class="text-muted">Browse our extensive collection of books from around the world</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="The Silent Patient">
+                        </div>
+                        <div class="book-info">
+                            <h5>The Silent Patient</h5>
+                            <p class="text-muted small mb-2">Alex Michaelides</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">Thriller</span>
+                                <span class="status-available"><i class="fas fa-check-circle"></i> Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Educated">
+                        </div>
+                        <div class="book-info">
+                            <h5>Educated</h5>
+                            <p class="text-muted small mb-2">Tara Westover</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">Memoir</span>
+                                <span class="status-borrowed"><i class="fas fa-times-circle"></i> Borrowed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Project Hail Mary">
+                        </div>
+                        <div class="book-info">
+                            <h5>Project Hail Mary</h5>
+                            <p class="text-muted small mb-2">Andy Weir</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">Sci-Fi</span>
+                                <span class="status-available"><i class="fas fa-check-circle"></i> Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="The Midnight Library">
+                        </div>
+                        <div class="book-info">
+                            <h5>The Midnight Library</h5>
+                            <p class="text-muted small mb-2">Matt Haig</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">Fantasy</span>
+                                <span class="status-available"><i class="fas fa-check-circle"></i> Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-primary px-4">View Full Catalog</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Example (Hidden by default, shown after login) -->
+    <div id="dashboard" style="display: none;">
+        <div class="container-fluid py-4">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3">
+                    <div class="sidebar">
+                        <div class="text-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin" class="rounded-circle mb-2" width="80">
+                            <h5>Admin User</h5>
+                            <p class="text-muted small">Library Administrator</p>
+                        </div>
+                        
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-book"></i> Books</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-users"></i> Members</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-chart-pie"></i> Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-cog"></i> Settings</a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="col-lg-9">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="fw-bold">Dashboard Overview</h2>
+                            <p class="text-muted">Welcome back! Here's what's happening in your library today.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="dashboard-card">
+                                <h5 class="text-muted">Total Books</h5>
+                                <h2 class="fw-bold">2,458</h2>
+                                <p class="text-success small mb-0"><i class="fas fa-arrow-up"></i> 12% from last month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="dashboard-card">
+                                <h5 class="text-muted">Active Members</h5>
+                                <h2 class="fw-bold">1,245</h2>
+                                <p class="text-success small mb-0"><i class="fas fa-arrow-up"></i> 8% from last month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="dashboard-card">
+                                <h5 class="text-muted">Books Checked Out</h5>
+                                <h2 class="fw-bold">387</h2>
+                                <p class="text-danger small mb-0"><i class="fas fa-arrow-down"></i> 3% from last week</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="dashboard-card">
+                                <h5 class="text-muted">Overdue Books</h5>
+                                <h2 class="fw-bold">23</h2>
+                                <p class="text-success small mb-0"><i class="fas fa-arrow-down"></i> 15% from last week</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="dashboard-card">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>Recent Transactions</h5>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Member</th>
+                                                <th>Book</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://randomuser
